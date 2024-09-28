@@ -87,8 +87,8 @@ jobs:
       - name: Copy Images to _static
         run: |
           mkdir -p docs/source/_static  # Ensure _static directory exists
-          cp Field_Guide_Cover.jpg docs/source/_static/  # Copy Field Guide image from root to _static directory
-          cp Handbook_Cover.jpg docs/source/_static/  # Copy Handbook image from root to _static directory
+          cp *.jpg docs/source/_static/  # Copy all .jpg files from root to _static directory
+          cp *.png docs/source/_static/  # Copy all .png files from root to _static directory
           cp Aurora_Field_Guide.pdf docs/source/_static/  # Copy PDF from root to _static directory
 
       - name: Configure Sphinx for BibTeX
