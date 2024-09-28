@@ -40,25 +40,29 @@ jobs:
         run: |
           pandoc main.tex --bibliography=references.bib --filter pandoc-citeproc -o docs/source/main.rst  # Convert your LaTeX file to RST format with bibliography
 
-      - name: Copy Images to _static
-        run: |
-          mkdir -p docs/source/_static  # Ensure _static directory exists
-          cp *.jpg docs/source/_static/  # Copy all .jpg files from root to _static directory
-          cp *.png docs/source/_static/  # Copy all .png files from root to _static directory
-          cp Aurora_Field_Guide.pdf docs/source/_static/  # Copy PDF from root to _static directory
-
-      - name: Validate Image Files
-        run: |
-          if [ ! -f "docs/source/_static/Field_Guide_Cover.jpg" ]; then echo "Field_Guide_Cover.jpg not found!"; exit 1; fi
-          if [ ! -f "docs/source/_static/Handbook_Cover.jpg" ]; then echo "Handbook_Cover.jpg not found!"; exit 1; fi
-          if [ ! -f "docs/source/_static/Fig1_magnetosphere.png" ]; then echo "Fig1_magnetosphere.png not found!"; exit 1; fi
-          # Add other image validation checks as needed
-
       - name: Create Master Document (index.rst)
         run: |
           echo "**Hello and Welcome!**" > docs/source/index.rst  # Make the title bold
           echo "" >> docs/source/index.rst
-          # ... [rest of your index content]
+          echo "We are a team of scientists and citizen scientists, all united by a shared passion for the aurora! Together, in the \`Auroral Research Coordination: Towards Internationalised Citizen Science (ARCTICS) <https://collab.issibern.ch/arctics/>\`_ group, we’ve combined our expertise to create two valuable resources for the aurora community." >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "Our Aurora Field Guide provides examples of various types of auroras, helping you recognize and identify different forms in your own photographs. Meanwhile, our Aurora Handbook delves deeper into aurora chasing, capturing images for scientific research, and contributing to our collective understanding. We explain the process of taking and submitting your photos, how collaborations between professional scientists and citizen scientists unfold, and highlight key discoveries that have emerged through this teamwork." >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "These guides are available to you free of charge, and we hope that you enjoy them! Happy aurora hunting from the ARCTICS team!" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo ".. raw:: html" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "   <a href='https://zenodo.org/doi/10.5281/zenodo.13837258' style='display:inline-block; vertical-align:middle;'>" >> docs/source/index.rst
+          echo "      <img src='https://zenodo.org/badge/862822419.svg' alt='DOI'>" >> docs/source/index.rst
+          echo "   </a>" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "To cite the work, we ask that you use the above doi." >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "Both guides are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)." >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst  # Add a blank line for spacing
+          echo "**Aurora Field Guide for Citizen Science**" >> docs/source/index.rst  # Add bold section title
+          echo "" >> docs/source/index.rst
           echo ".. image:: _static/Field_Guide_Cover.jpg" >> docs/source/index.rst  # Add image from static folder
           echo "   :alt: Aurora Field Guide Cover" >> docs/source/index.rst
           echo "   :align: center" >> docs/source/index.rst
@@ -77,6 +81,13 @@ jobs:
           echo "" >> docs/source/index.rst
           echo "   main" >> docs/source/index.rst
 
+      - name: Copy Images to _static
+        run: |
+          mkdir -p docs/source/_static  # Ensure _static directory exists
+          cp *.jpg docs/source/_static/  # Copy all .jpg files from root to _static directory
+          cp *.png docs/source/_static/  # Copy all .png files from root to _static directory
+          cp Aurora_Field_Guide.pdf docs/source/_static/  # Copy PDF from root to _static directory
+
       - name: Configure Sphinx for BibTeX
         run: |
           echo 'extensions.append("sphinx_wagtail_theme")' >> docs/source/conf.py  # Enable Wagtail theme
@@ -85,6 +96,16 @@ jobs:
           echo 'bibtex_bibfiles = ["../../references.bib"]' >> docs/source/conf.py  # Point to the .bib file in the root directory
           echo 'html_static_path = ["_static"]' >> docs/source/conf.py  # Specify the static path
           echo 'master_doc = "index"' >> docs/source/conf.py  # Set the master document
+          echo 'html_extra_path = ["_static"]' >> docs/source/conf.py  # Add this line for static files
+
+      - name: Validate Image Files
+        run: |
+          if [ ! -f "docs/source/_static/Field_Guide_Cover.jpg" ]; then echo "Field_Guide_Cover.jpg not found!"; exit 1; fi
+          if [ ! -f "docs/source/_static/Handbook_Cover.jpg" ]; then echo "Handbook_Cover.jpg not found!"; exit 1; fi
+          # Add other image validation checks as needed
+
+      - name: Ensure _static Directory Exists
+        run: mkdir -p docs/source/_static  # Create _static directory if it doesn't exist
 
       - name: Build Sphinx Documentation
         run: |
