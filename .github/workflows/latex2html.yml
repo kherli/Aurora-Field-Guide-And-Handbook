@@ -95,8 +95,14 @@ jobs:
           echo 'extensions = ["sphinx.ext.imgmath", "sphinx_wagtail_theme", "sphinxcontrib.bibtex"]' >> docs/source/conf.py  # Enable LaTeX for images and BibTeX support
           echo 'bibtex_bibfiles = ["../../references.bib"]' >> docs/source/conf.py  # Point to the .bib file in the root directory
           echo 'html_static_path = ["_static"]' >> docs/source/conf.py  # Specify the static path
-          echo 'html_baseurl = "https://kherli.github.io/Aurora-Field-Guide-And-Handbook/"' >> docs/source/conf.py  # Add the base URL for GitHub Pages
           echo 'master_doc = "index"' >> docs/source/conf.py  # Set the master document
+          echo 'html_extra_path = ["_static"]' >> docs/source/conf.py  # Add this line for static files
+
+      - name: Validate Image Files
+        run: |
+          if [ ! -f "docs/source/_static/Field_Guide_Cover.jpg" ]; then echo "Field_Guide_Cover.jpg not found!"; exit 1; fi
+          if [ ! -f "docs/source/_static/Handbook_Cover.jpg" ]; then echo "Handbook_Cover.jpg not found!"; exit 1; fi
+          # Add other image validation checks as needed
 
       - name: Ensure _static Directory Exists
         run: mkdir -p docs/source/_static  # Create _static directory if it doesn't exist
@@ -138,5 +144,3 @@ jobs:
 
           # Push changes to the gh-pages branch
           git push --force origin gh-pages  # Use --force to overwrite if needed
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication
