@@ -36,6 +36,9 @@ jobs:
           cd docs
           sphinx-quickstart --quiet --sep --project="Handbook" --author="ARCTICS" --release="0.1" --language="en" --makefile
 
+      - name: Check for LaTeX file
+        run: ls -la  # List files to ensure main.tex exists
+
       - name: Convert LaTeX to RST with Bibliography
         run: |
           pandoc main.tex --bibliography=references.bib --filter pandoc-citeproc -o docs/source/main.rst  # Convert your LaTeX file to RST format with bibliography
@@ -43,7 +46,7 @@ jobs:
       - name: Create Master Document (index.rst)
         run: |
           cat <<EOT > docs/source/index.rst
-**Hello and Welcome!**
+# Hello and Welcome!
 
 We are a team of scientists and citizen scientists, all united by a shared passion for the aurora! Together, in the `Auroral Research Coordination: Towards Internationalised Citizen Science (ARCTICS) <https://collab.issibern.ch/arctics/>`_ group, we’ve combined our expertise to create two valuable resources for the aurora community.
 
@@ -81,65 +84,3 @@ Both guides are licensed under a Creative Commons Attribution-NonCommercial 4.0 
 
    main
 EOT
-
-      - name: Copy Images to _static
-        run: |
-          mkdir -p docs/source/_static  # Ensure _static directory exists
-          cp *.jpg docs/source/_static/  # Copy all .jpg files from root to _static directory
-          cp *.png docs/source/_static/  # Copy all .png files from root to _static directory
-          cp Aurora_Field_Guide.pdf docs/source/_static/  # Copy PDF from root to _static directory
-
-      - name: Configure Sphinx for BibTeX
-        run: |
-          echo 'extensions = ["sphinx.ext.imgmath", "sphinx_wagtail_theme", "sphinxcontrib.bibtex"]' > docs/source/conf.py  # Enable LaTeX for images and BibTeX support
-          echo 'html_theme = "sphinx_wagtail_theme"' >> docs/source/conf.py  # Set Wagtail theme
-          echo 'bibtex_bibfiles = ["../../references.bib"]' >> docs/source/conf.py  # Point to the .bib file in the root directory
-          echo 'html_static_path = ["_static"]' >> docs/source/conf.py  # Specify the static path
-          echo 'html_baseurl = "https://kherli.github.io/Aurora-Field-Guide-And-Handbook/"' >> docs/source/conf.py  # Add the base URL for GitHub Pages
-          echo 'master_doc = "index"' >> docs/source/conf.py  # Set the master document
-
-      - name: Ensure _static Directory Exists
-        run: mkdir -p docs/source/_static  # Create _static directory if it doesn't exist
-
-      - name: Lint reStructuredText Files
-        run: rst-lint docs/source/*.rst  # Lint the RST files to catch formatting issues
-
-      - name: Build Sphinx Documentation
-        run: |
-          cd docs
-          make html SPHINXOPTS="-v"  # Build the HTML documentation
-
-      - name: List HTML Build Directory
-        run: |
-          cd docs
-          ls -la build/html  # List contents of the HTML build directory
-
-      - name: List Static Directory Contents
-        run: |
-          cd docs/build/html/_static
-          ls -la  # List contents of the _static directory
-
-      - name: Check Generated HTML Content
-        run: |
-          cd docs
-          cat build/html/index.html  # Output the contents of the index.html for inspection
-
-      - name: Commit and push to gh-pages
-        run: |
-          git config --local user.email "katieh@unis.no"  # Your email
-          git config --local user.name "kherli"  # Your name
-
-          # Create or switch to gh-pages branch
-          git checkout -B gh-pages  # Creates the branch if it doesn't exist or resets it
-
-          # Copy generated HTML to the root of the gh-pages branch
-          cp -R docs/build/html/* ./  # Copies the built files
-
-          # Add and commit the changes
-          git add .
-          git commit -m "Deploy Sphinx documentation" || echo "No changes to commit"  # Prevent errors if no changes
-
-          # Push changes to the gh-pages branch
-          git push --force origin gh-pages  # Use --force to overwrite if needed
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication
