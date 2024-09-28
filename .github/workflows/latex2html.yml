@@ -51,7 +51,7 @@ jobs:
         run: |
           if [ ! -f "docs/source/_static/Field_Guide_Cover.jpg" ]; then echo "Field_Guide_Cover.jpg not found!"; exit 1; fi
           if [ ! -f "docs/source/_static/Handbook_Cover.jpg" ]; then echo "Handbook_Cover.jpg not found!"; exit 1; fi
-          if [ ! -f "docs/source/_static/magnetosphere.png" ]; then echo "magnetosphere.png not found!"; exit 1; fi
+          if [ ! -f "docs/source/_static/Fig1_magnetosphere.png" ]; then echo "Fig1_magnetosphere.png not found!"; exit 1; fi
           # Add other image validation checks as needed
 
       - name: Create Master Document (index.rst)
