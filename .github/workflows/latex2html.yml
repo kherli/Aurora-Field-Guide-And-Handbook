@@ -1,0 +1,145 @@
+name: Convert LaTeX to HTML with Sphinx
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on pushes to the main branch
+
+permissions:
+  contents: write  # Grant write access to the GitHub Actions bot
+
+jobs:
+  sphinx:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3 python3-pip pandoc pandoc-citeproc  # Install Pandoc and pandoc-citeproc
+          pip3 install sphinx sphinx-wagtail-theme sphinxcontrib-bibtex  # Install Sphinx and BibTeX extension
+
+      - name: Verify Installed Packages
+        run: pip3 list  # This will list all installed Python packages
+
+      - name: Clean Build Directory
+        run: rm -rf docs/build/html  # Clean previous builds
+
+      - name: Create docs/source Directory
+        run: mkdir -p docs/source  # Create a docs/source directory if it doesn't exist
+
+      - name: Initialize Sphinx Documentation
+        run: |
+          cd docs
+          sphinx-quickstart --quiet --sep --project="Handbook" --author="ARCTICS" --release="0.1" --language="en" --makefile
+
+      - name: Convert LaTeX to RST with Bibliography
+        run: |
+          pandoc main.tex --bibliography=references.bib --filter pandoc-citeproc -o docs/source/main.rst  # Convert your LaTeX file to RST format with bibliography
+
+      - name: Create Master Document (index.rst)
+        run: |
+          echo "**Hello and Welcome!**" > docs/source/index.rst  # Make the title bold
+          echo "" >> docs/source/index.rst
+          echo "We are a team of scientists and citizen scientists, all united by a shared passion for the aurora! Together, in the \`Auroral Research Coordination: Towards Internationalised Citizen Science (ARCTICS) <https://collab.issibern.ch/arctics/>\`_ group, we’ve combined our expertise to create two valuable resources for the aurora community." >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "Our Aurora Field Guide provides examples of various types of auroras, helping you recognize and identify different forms in your own photographs. Meanwhile, our Aurora Handbook delves deeper into aurora chasing, capturing images for scientific research, and contributing to our collective understanding. We explain the process of taking and submitting your photos, how collaborations between professional scientists and citizen scientists unfold, and highlight key discoveries that have emerged through this teamwork." >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "These guides are available to you free of charge, and we hope that you enjoy them! Happy aurora hunting from the ARCTICS team!" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo ".. raw:: html" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "   <a href='https://zenodo.org/doi/10.5281/zenodo.13837258' style='display:inline-block; vertical-align:middle;'>" >> docs/source/index.rst
+          echo "      <img src='https://zenodo.org/badge/862822419.svg' alt='DOI'>" >> docs/source/index.rst
+          echo "   </a>" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "To cite the work, we ask that you use the above doi." >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "Both guides are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License (CC BY-NC 4.0)." >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst  # Add a blank line for spacing
+          echo "**Aurora Field Guide for Citizen Science**" >> docs/source/index.rst  # Add bold section title
+          echo "" >> docs/source/index.rst
+          echo ".. image:: _static/Field_Guide_Cover.jpg" >> docs/source/index.rst  # Add image from static folder
+          echo "   :alt: Aurora Field Guide Cover" >> docs/source/index.rst
+          echo "   :align: center" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "\`Click Here for the Aurora Field Guide <_static/Aurora_Field_Guide.pdf>\`_" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "**Aurora Handbook for Citizen Science**" >> docs/source/index.rst  # Add bold section title for the Handbook
+          echo "" >> docs/source/index.rst
+          echo ".. image:: _static/Handbook_Cover.jpg" >> docs/source/index.rst  # Add handbook image
+          echo "   :alt: Aurora Handbook Cover" >> docs/source/index.rst
+          echo "   :align: center" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo ".. toctree::" >> docs/source/index.rst
+          echo "   :maxdepth: 2" >> docs/source/index.rst
+          echo "   :caption: Contents:" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "   main" >> docs/source/index.rst
+
+
+
+
+      - name: Copy Images to _static
+        run: |
+          mkdir -p docs/source/_static  # Ensure _static directory exists
+          cp Field_Guide_Cover.jpg docs/source/_static/  # Copy Field Guide image from root to _static directory
+          cp Handbook_Cover.jpg docs/source/_static/  # Copy Handbook image from root to _static directory
+          cp Aurora_Field_Guide.pdf docs/source/_static/  # Copy PDF from root to _static directory
+
+      - name: Configure Sphinx for BibTeX
+        run: |
+          echo 'extensions.append("sphinx_wagtail_theme")' >> docs/source/conf.py  # Enable Wagtail theme
+          echo 'html_theme = "sphinx_wagtail_theme"' >> docs/source/conf.py  # Set Wagtail theme
+          echo 'extensions = ["sphinx.ext.imgmath", "sphinx_wagtail_theme", "sphinxcontrib.bibtex"]' >> docs/source/conf.py  # Enable LaTeX for images and BibTeX support
+          echo 'bibtex_bibfiles = ["../../references.bib"]' >> docs/source/conf.py  # Point to the .bib file in the root directory
+          echo 'html_static_path = ["_static"]' >> docs/source/conf.py  # Specify the static path
+          echo 'html_baseurl = "https://kherli.github.io/Aurora-Field-Guide-And-Handbook/"' >> docs/source/conf.py  # Add the base URL for GitHub Pages
+          echo 'master_doc = "index"' >> docs/source/conf.py  # Set the master document
+
+      - name: Ensure _static Directory Exists
+        run: mkdir -p docs/source/_static  # Create _static directory if it doesn't exist
+
+      - name: Build Sphinx Documentation
+        run: |
+          cd docs
+          make html SPHINXOPTS="-v"  # Build the HTML documentation
+
+      - name: List HTML Build Directory
+        run: |
+          cd docs
+          ls -la build/html  # List contents of the HTML build directory
+
+      - name: List Static Directory Contents
+        run: |
+          cd docs/build/html/_static
+          ls -la  # List contents of the _static directory
+
+      - name: Check Generated HTML Content
+        run: |
+          cd docs
+          cat build/html/index.html  # Output the contents of the index.html for inspection
+
+      - name: Commit and push to gh-pages
+        run: |
+          git config --local user.email "katieh@unis.no"  # Your email
+          git config --local user.name "kherli"  # Your name
+
+          # Create or switch to gh-pages branch
+          git checkout -B gh-pages  # Creates the branch if it doesn't exist or resets it
+
+          # Copy generated HTML to the root of the gh-pages branch
+          cp -R docs/build/html/* ./  # Copies the built files
+
+          # Add and commit the changes
+          git add .
+          git commit -m "Deploy Sphinx documentation" || echo "No changes to commit"  # Prevent errors if no changes
+
+          # Push changes to the gh-pages branch
+          git push --force origin gh-pages  # Use --force to overwrite if needed
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication
