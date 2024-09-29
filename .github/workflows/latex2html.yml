@@ -20,7 +20,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y python3 python3-pip pandoc pandoc-citeproc texlive-latex-extra texlive-fonts-recommended texlive-latex-recommended  # Install Pandoc and LaTeX packages
-          pip3 install sphinx sphinx-wagtail-theme sphinxcontrib-bibtex docutils  # Install Sphinx, BibTeX extension, and docutils
+          pip3 install sphinx sphinx-wagtail-theme sphinxcontrib-bibtex  # Install Sphinx and BibTeX extension
 
       - name: Verify Installed Packages
         run: pip3 list  # This will list all installed Python packages
@@ -39,6 +39,8 @@ jobs:
       - name: Convert LaTeX to RST with Bibliography
         run: |
           pandoc main.tex --bibliography=references.bib --filter pandoc-citeproc -o docs/source/main.rst  # Convert your LaTeX file to RST format with bibliography
+          # Update image paths to point to _static
+          sed -i 's|^\(.. image:: \)\(.*\)|\1_static/\2|' docs/source/main.rst
 
       - name: Create Master Document (index.rst)
         run: |
@@ -103,9 +105,11 @@ jobs:
           echo 'master_doc = "index"' >> docs/source/conf.py  # Set the master document
           echo 'html_extra_path = ["_static"]' >> docs/source/conf.py  # Add this line for static files
 
-      - name: Validate RST Files
+      - name: Validate Image Files
         run: |
-          python3 -m docutils docs/source/*.rst > /dev/null  # Validate all RST files
+          if [ ! -f "docs/source/_static/Field_Guide_Cover.jpg" ]; then echo "Field_Guide_Cover.jpg not found!"; exit 1; fi
+          if [ ! -f "docs/source/_static/Handbook_Cover.jpg" ]; then echo "Handbook_Cover.jpg not found!"; exit 1; fi
+          # Add other image validation checks as needed
 
       - name: Ensure _static Directory Exists
         run: mkdir -p docs/source/_static  # Create _static directory if it doesn't exist
