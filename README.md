@@ -18,7 +18,7 @@ These guides are available to you free of charge, and we hope that you enjoy the
 - [Aurora Field Guide (PDF)](https://kherli.github.io/Aurora-Field-Guide-And-Handbook/_static/Aurora_Field_Guide.pdf)
 - [Aurora Handbook (Github Pages)](https://kherli.github.io/Aurora-Field-Guide-And-Handbook/main.html)
 
-## Lisence & Citation
+## License & Citation
 
 <a href="https://doi.org/10.5281/zenodo.13843087"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.13843087.svg" alt="DOI"></a>
 
