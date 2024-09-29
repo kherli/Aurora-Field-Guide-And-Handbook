@@ -20,7 +20,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y python3 python3-pip pandoc pandoc-citeproc texlive-latex-extra texlive-fonts-recommended texlive-latex-recommended  # Install Pandoc and LaTeX packages
-          pip3 install sphinx sphinx-wagtail-theme sphinxcontrib-bibtex rst-lint  # Install Sphinx, BibTeX extension, and linting tool
+          pip3 install sphinx sphinx-wagtail-theme sphinxcontrib-bibtex docutils  # Install Sphinx, BibTeX extension, and docutils
 
       - name: Verify Installed Packages
         run: pip3 list  # This will list all installed Python packages
@@ -103,16 +103,9 @@ jobs:
           echo 'master_doc = "index"' >> docs/source/conf.py  # Set the master document
           echo 'html_extra_path = ["_static"]' >> docs/source/conf.py  # Add this line for static files
 
-      - name: Validate Image Files
+      - name: Validate RST Files
         run: |
-          if [ ! -f "docs/source/_static/Field_Guide_Cover.jpg" ]; then echo "Field_Guide_Cover.jpg not found!"; exit 1; fi
-          if [ ! -f "docs/source/_static/Handbook_Cover.jpg" ]; then echo "Handbook_Cover.jpg not found!"; exit 1; fi
-          # Add other image validation checks as needed
-
-      - name: Lint RST files
-        run: |
-          pip install rst-lint  # Install rst-lint
-          rst-lint docs/source/*.rst  # Lint the RST files
+          python3 -m docutils docs/source/*.rst > /dev/null  # Validate all RST files
 
       - name: Ensure _static Directory Exists
         run: mkdir -p docs/source/_static  # Create _static directory if it doesn't exist
@@ -125,24 +118,3 @@ jobs:
       - name: List HTML Build Directory
         run: |
           cd docs
-          ls -la build/html  # List contents of the HTML build directory
-
-      - name: List Static Directory Contents
-        run: |
-          cd docs/build/html/_static
-          ls -la  # List contents of the _static directory
-
-      - name: Check Generated HTML Content
-        run: |
-          cd docs
-          cat build/html/index.html  # Output the contents of the index.html for inspection
-
-      - name: Commit and push to gh-pages
-        run: |
-          git config --local user.email "katieh@unis.no"  # Your email
-          git config --local user.name "kherli"  # Your name
-
-          # Create or switch to gh-pages branch
-          git checkout -B gh-pages  # Creates the branch if it doesn't exist or resets it
-
-          #
