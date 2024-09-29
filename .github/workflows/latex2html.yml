@@ -118,3 +118,32 @@ jobs:
       - name: List HTML Build Directory
         run: |
           cd docs
+          ls -la build/html  # List contents of the HTML build directory
+
+      - name: List Static Directory Contents
+        run: |
+          cd docs/build/html/_static
+          ls -la  # List contents of the _static directory
+
+      - name: Check Generated HTML Content
+        run: |
+          cd docs
+          cat build/html/index.html  # Output the contents of the index.html for inspection
+
+      - name: Commit and push to gh-pages
+        run: |
+          git config --local user.email "katieh@unis.no"  # Your email
+          git config --local user.name "kherli"  # Your name
+
+          # Create or switch to gh-pages branch
+          git checkout -B gh-pages  # Creates the branch if it doesn't exist or resets it
+
+          # Copy generated HTML to the root of the gh-pages branch
+          cp -R docs/build/html/* ./  # Copies the built files
+
+          # Add and commit the changes
+          git add .
+          git commit -m "Deploy Sphinx documentation" || echo "No changes to commit"  # Prevent errors if no changes
+
+          # Push changes to the gh-pages branch
+          git push --force origin gh-pages  # Use --force to overwrite if needed
