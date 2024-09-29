@@ -42,18 +42,23 @@ jobs:
 
       - name: Create Master Document (index.rst)
         run: |
-          echo "**Hello and Welcome!**" > docs/source/index.rst  # Make the title bold
+          echo "**Welcome!**" > docs/source/index.rst  # Title
           echo "" >> docs/source/index.rst
           echo "We are a team of scientists and citizen scientists, all united by a shared passion for the aurora! Together, in the \`Auroral Research Coordination: Towards Internationalised Citizen Science (ARCTICS) <https://collab.issibern.ch/arctics/>\`_ group, we’ve combined our expertise to create two valuable resources for the aurora community." >> docs/source/index.rst
           echo "" >> docs/source/index.rst
-          echo "Our Aurora Field Guide provides examples of various types of auroras, helping you recognize and identify different forms in your own photographs. Meanwhile, our Aurora Handbook delves deeper into aurora chasing, capturing images for scientific research, and contributing to our collective understanding. We explain the process of taking and submitting your photos, how collaborations between professional scientists and citizen scientists unfold, and highlight key discoveries that have emerged through this teamwork." >> docs/source/index.rst
+          echo "## Overview" >> docs/source/index.rst
           echo "" >> docs/source/index.rst
-          echo "These guides are available to you free of charge, and we hope that you enjoy them! Happy aurora hunting from the ARCTICS team!" >> docs/source/index.rst
+          echo "In this repository, you will find two key resources designed to support citizen scientist involvement in aurora research:" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "- **Aurora Field Guide**: A visual guide to different auroral forms, helping you identify various types of aurora in your own photographs." >> docs/source/index.rst
+          echo "- **Aurora Handbook**: A detailed guide explaining how to capture aurora images for scientific research, submit your photos, and understand how collaborations with scientists can contribute to new discoveries." >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "## License & Citation" >> docs/source/index.rst
           echo "" >> docs/source/index.rst
           echo ".. raw:: html" >> docs/source/index.rst
           echo "" >> docs/source/index.rst
-          echo "   <a href='https://zenodo.org/doi/10.5281/zenodo.13837258' style='display:inline-block; vertical-align:middle;'>" >> docs/source/index.rst
-          echo "      <img src='https://zenodo.org/badge/862822419.svg' alt='DOI'>" >> docs/source/index.rst
+          echo "   <a href='https://doi.org/10.5281/zenodo.13843087' style='display:inline-block; vertical-align:middle;'>" >> docs/source/index.rst
+          echo "      <img src='https://zenodo.org/badge/DOI/10.5281/zenodo.13843087.svg' alt='DOI'>" >> docs/source/index.rst
           echo "   </a>" >> docs/source/index.rst
           echo "" >> docs/source/index.rst
           echo "To cite the work, we ask that you use the above doi." >> docs/source/index.rst
