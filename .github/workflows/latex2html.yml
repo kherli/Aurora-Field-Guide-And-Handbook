@@ -40,7 +40,8 @@ jobs:
         run: |
           pandoc main.tex --bibliography=references.bib --filter pandoc-citeproc -o docs/source/main.rst  # Convert your LaTeX file to RST format with bibliography
           # Update image paths to point to _static
-          sed -i 's|^\(.. image:: \)\(.*\)|\1_static/\2|' docs/source/main.rst
+          sed -i 's|^.. image:: \(.*\)|.. image:: _static/\1|' docs/source/main.rst
+          sed -i 's|^.. figure:: \(.*\)|.. figure:: _static/\1|' docs/source/main.rst
 
       - name: Create Master Document (index.rst)
         run: |
