@@ -105,6 +105,8 @@ jobs:
           echo 'html_static_path = ["_static"]' >> docs/source/conf.py  # Specify the static path
           echo 'master_doc = "index"' >> docs/source/conf.py  # Set the master document
           echo 'html_extra_path = ["_static"]' >> docs/source/conf.py  # Add this line for static files
+          echo 'numfig = True' >> docs/source/conf.py  # Enable numbered figures
+          echo 'numfig_secnum_depth = 3' >> docs/source/conf.py  # Set depth for section numbering (up to level 3)
 
       - name: Validate Image Files
         run: |
