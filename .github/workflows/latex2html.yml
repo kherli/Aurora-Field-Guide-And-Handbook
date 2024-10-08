@@ -38,7 +38,7 @@ jobs:
 
       - name: Convert LaTeX to RST with Bibliography
         run: |
-          pandoc main.tex --bibliography=references.bib --filter pandoc-citeproc -o docs/source/main.rst --resource-path=.:_static --wrap=preserve --number-sections  # Convert your LaTeX file to RST format with bibliography
+          pandoc main.tex --bibliography=references.bib --filter pandoc-citeproc -o docs/source/main.rst --resource-path=.:_static --wrap=preserve --number-sections --no-wrap  # Convert your LaTeX file to RST format with bibliography
           # Update image paths to point to _static
           sed -i 's|^.. image:: \(.*\)|.. image:: _static/\1|' docs/source/main.rst
           sed -i 's|^.. figure:: \(.*\)|.. figure:: _static/\1|' docs/source/main.rst
