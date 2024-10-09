@@ -7,8 +7,6 @@
 \linenumbers
 % Bibliography handling
 \usepackage[style=apa, backend=biber]{biblatex}
-\renewbibmacro*{repeatedauthor}{%
-  \printnames{author}} % Force the printing of the full author name, even if repeated
 \renewcommand{\cite}[1]{\parencite{#1}}
 \addbibresource{references.bib}
 \renewcommand\refname{References} % Renames "Bibliography" (default) into "References"
