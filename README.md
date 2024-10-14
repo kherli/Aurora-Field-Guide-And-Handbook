@@ -21,7 +21,7 @@ These guides are available to you free of charge, and we hope that you enjoy the
 
 ## License & Citation
 
-<a href="https://doi.org/10.5281/zenodo.13931940"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.13931940.svg" alt="DOI"></a>
+<a href="https://doi.org/10.5281/zenodo.13931939"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.13931939.svg" alt="DOI"></a>
 
 To cite the work, we ask that you use the above doi.
 
