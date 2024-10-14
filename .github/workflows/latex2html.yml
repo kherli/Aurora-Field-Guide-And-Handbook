@@ -96,25 +96,26 @@ jobs:
           cp *.png docs/source/_static/  # Copy all .png files from root to _static directory
           cp Aurora_Field_Guide.pdf docs/source/_static/  # Copy PDF from root to _static directory
           
+
       - name: Configure Sphinx for BibTeX
         run: |
-          echo 'extensions.append("sphinx_wagtail_theme")' >> docs/source/conf.py  # Enable Wagtail theme
-          echo 'html_theme = "sphinx_wagtail_theme"' >> docs/source/conf.py  # Set Wagtail theme
-          echo 'extensions = ["sphinx.ext.imgmath", "sphinx_wagtail_theme", "sphinxcontrib.bibtex"]' >> docs/source/conf.py  # Enable LaTeX for images and BibTeX support
+          echo 'extensions = ["sphinx.ext.imgmath", "sphinx_wagtail_theme", "sphinxcontrib.bibtex"]' >> docs/source/conf.py  # Explicitly declare the extensions
           echo 'bibtex_bibfiles = ["../../references.bib"]' >> docs/source/conf.py  # Point to the .bib file in the root directory
+          echo 'html_theme = "sphinx_wagtail_theme"' >> docs/source/conf.py  # Set the Wagtail theme
           echo 'html_static_path = ["_static"]' >> docs/source/conf.py  # Specify the static path
           echo 'master_doc = "index"' >> docs/source/conf.py  # Set the master document
           echo 'html_extra_path = ["_static"]' >> docs/source/conf.py  # Add this line for static files
           echo 'numfig = True' >> docs/source/conf.py  # Enable numbered figures
           echo 'numfig_secnum_depth = 3' >> docs/source/conf.py  # Set depth for section numbering (up to level 3)
-          # Add configuration for "View on GitHub" button
+          # Overwrite the html_context to avoid the Wagtail defaults
           echo 'html_context = {' >> docs/source/conf.py
           echo '    "display_github": True,' >> docs/source/conf.py
           echo '    "github_user": "kherli",' >> docs/source/conf.py  # Your GitHub username
           echo '    "github_repo": "Aurora-Field-Guide-And-Handbook",' >> docs/source/conf.py  # Your repository name
-          echo '    "github_version": "gh-pages",' >> docs/source/conf.py  # Replace with your branch name if different
-          echo '    "conf_py_path": "/docs/",' >> docs/source/conf.py  # Adjust if your docs are elsewhere
+          echo '    "github_version": "main",' >> docs/source/conf.py  # The branch you want to link to
+          echo '    "conf_py_path": "/docs/source/",' >> docs/source/conf.py  # Adjust if your docs are elsewhere
           echo '}' >> docs/source/conf.py
+
 
       - name: Validate Image Files
         run: |
