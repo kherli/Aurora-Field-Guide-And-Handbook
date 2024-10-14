@@ -85,12 +85,15 @@ jobs:
           echo "" >> docs/source/index.rst
           echo "\`Click Here for the Aurora Handbook (PDF) <_static/Aurora_Handbook.pdf>\`_" >> docs/source/index.rst
           echo "" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst  # Add a blank line for spacing
           echo "Or browse the Handbook online by clicking the links below." >> docs/source/index.rst
+          echo "" >> docs/source/index.rst  # Add a blank line for spacing
           echo ".. toctree::" >> docs/source/index.rst
           echo "   :maxdepth: 2" >> docs/source/index.rst
           echo "   :caption: Contents:" >> docs/source/index.rst
           echo "" >> docs/source/index.rst
           echo "   main" >> docs/source/index.rst
+
 
       - name: Copy Images to _static
         run: |
