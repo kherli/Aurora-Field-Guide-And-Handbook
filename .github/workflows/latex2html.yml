@@ -83,6 +83,9 @@ jobs:
           echo "   :alt: Aurora Handbook Cover" >> docs/source/index.rst
           echo "   :align: center" >> docs/source/index.rst
           echo "" >> docs/source/index.rst
+          echo "\`Click Here for the Aurora Handbook (PDF) <_static/Aurora_Handbook.pdf>\`_" >> docs/source/index.rst
+          echo "" >> docs/source/index.rst
+          echo "Or browse the Handbook online by clicking the links below." >> docs/source/index.rst
           echo ".. toctree::" >> docs/source/index.rst
           echo "   :maxdepth: 2" >> docs/source/index.rst
           echo "   :caption: Contents:" >> docs/source/index.rst
@@ -95,6 +98,7 @@ jobs:
           cp *.jpg docs/source/_static/  # Copy all .jpg files from root to _static directory
           cp *.png docs/source/_static/  # Copy all .png files from root to _static directory
           cp Aurora_Field_Guide.pdf docs/source/_static/  # Copy PDF from root to _static directory
+          cp Aurora_Handbook.pdf docs/source/_static/  # Copy PDF from root to _static directory
           
             
       - name: Configure Sphinx for BibTeX
