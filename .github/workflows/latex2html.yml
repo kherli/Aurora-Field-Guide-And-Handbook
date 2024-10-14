@@ -119,7 +119,7 @@ jobs:
       
           # Explicitly set theme options to override the default behavior
           echo 'html_theme_options = {' >> docs/source/conf.py
-          echo '    "github_url": "https://github.com/kherli/Aurora-Field-Guide-And-Handbook/tree/gh-pages/docs/source/index.rst",' >> docs/source/conf.py  # Direct link to "gh-pages" branch root
+          echo '    "github_url": "https://github.com/kherli/Aurora-Field-Guide-And-Handbook/tree/gh-pages/docs/source//",' >> docs/source/conf.py  # Direct link to "gh-pages" branch root
           echo '}' >> docs/source/conf.py
 
 
