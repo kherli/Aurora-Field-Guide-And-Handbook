@@ -60,8 +60,8 @@ jobs:
           echo "" >> docs/source/index.rst
           echo ".. raw:: html" >> docs/source/index.rst
           echo "" >> docs/source/index.rst
-          echo "   <a href='https://doi.org/10.5281/zenodo.13931940' style='display:inline-block; vertical-align:middle;'>" >> docs/source/index.rst
-          echo "      <img src='https://zenodo.org/badge/DOI/10.5281/zenodo.13931940.svg' alt='DOI'>" >> docs/source/index.rst
+          echo "   <a href='https://doi.org/10.5281/zenodo.13931939' style='display:inline-block; vertical-align:middle;'>" >> docs/source/index.rst
+          echo "      <img src='https://zenodo.org/badge/DOI/10.5281/zenodo.13931939.svg' alt='DOI'>" >> docs/source/index.rst
           echo "   </a>" >> docs/source/index.rst
           echo "" >> docs/source/index.rst
           echo "To cite the work, we ask that you use the above doi." >> docs/source/index.rst
