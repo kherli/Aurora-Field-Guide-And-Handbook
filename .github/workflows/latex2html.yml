@@ -115,6 +115,8 @@ jobs:
           echo 'html_extra_path = ["_static"]' >> docs/source/conf.py  # Add this line for static files
           echo 'numfig = True' >> docs/source/conf.py  # Enable numbered figures
           echo 'numfig_secnum_depth = 3' >> docs/source/conf.py  # Set depth for section numbering (up to level 3)
+          echo 'html_title = "ARCTICS Aurora Field Guide And Handbook"' >> docs/source/conf.py  # Set the title for the site
+
       
           # Add configuration for "View on GitHub" button
           echo 'html_context = {' >> docs/source/conf.py
