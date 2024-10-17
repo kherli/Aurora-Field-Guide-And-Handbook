@@ -45,6 +45,9 @@ jobs:
 
       - name: Create Master Document (index.rst)
         run: |
+          echo "ARCTICS Aurora Field Guide And Handbook" > docs/source/index.rst  # Explicit title
+          echo "======================" >> docs/source/index.rst  # Add a title underline
+          echo "" >> docs/source/index.rst
           echo "**Welcome!**" > docs/source/index.rst  # Title
           echo "" >> docs/source/index.rst
           echo "We are a team of scientists and citizen scientists, all united by a shared passion for the aurora! Together, in the \`Auroral Research Coordination: Towards Internationalised Citizen Science (ARCTICS) <https://collab.issibern.ch/arctics/>\`_ group, we’ve combined our expertise to create two valuable resources for the aurora community." >> docs/source/index.rst
@@ -136,6 +139,9 @@ jobs:
           echo 'html_theme_options = {' >> docs/source/conf.py
           echo '    "site_name": "ARCTICS Aurora Field Guide And Handbook",' >> docs/source/conf.py
           echo '    "github_url": "https://github.com/kherli/Aurora-Field-Guide-And-Handbook/tree/gh-pages/docs/source/",' >> docs/source/conf.py  # Direct link to "gh-pages" branch root
+          echo '    "title": "ARCTICS Aurora Field Guide And Handbook",' >> docs/source/conf.py
+          echo '    "breadcrumb_separator": ">",' >> docs/source/conf.py  # Set breadcrumb separator
+          echo '    "breadcrumb_home_label": "Home",' >> docs/source/conf.py  # Set home breadcrumb label
           echo '}' >> docs/source/conf.py
 
 
