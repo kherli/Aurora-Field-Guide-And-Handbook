@@ -15,9 +15,12 @@ In this repository, you will find two key resources designed to support citizen 
 
 These guides are available to you free of charge, and we hope that you enjoy them! Happy aurora hunting from the ARCTICS team!
 
+[Click here to access the Field Guide and Handbook online](https://kherli.github.io/Aurora-Field-Guide-And-Handbook/index.html).
+
+PDF versions can also be directly downloaded here:
 - [Aurora Field Guide (PDF)](https://kherli.github.io/Aurora-Field-Guide-And-Handbook/_static/Aurora_Field_Guide.pdf)
 - [Aurora Handbook (PDF)](https://kherli.github.io/Aurora-Field-Guide-And-Handbook/_static/Aurora_Handbook.pdf)
-- [Aurora Handbook (Github Pages Website)](https://kherli.github.io/Aurora-Field-Guide-And-Handbook/main.html)
+
 
 ## License & Citation
 
