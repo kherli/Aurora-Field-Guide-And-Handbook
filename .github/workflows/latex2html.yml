@@ -117,6 +117,11 @@ jobs:
           echo 'numfig_secnum_depth = 3' >> docs/source/conf.py  # Set depth for section numbering (up to level 3)
           echo 'html_title = "ARCTICS Aurora Field Guide And Handbook"' >> docs/source/conf.py  # Set the title for the site
 
+          # Set the title
+          echo 'project = "ARCTICS Aurora Field Guide And Handbook"' >> docs/source/conf.py
+          echo 'html_title = "ARCTICS Aurora Field Guide And Handbook"' >> docs/source/conf.py
+          echo 'html_short_title = "ARCTICS Aurora Guides"' >> docs/source/conf.py
+
       
           # Add configuration for "View on GitHub" button
           echo 'html_context = {' >> docs/source/conf.py
@@ -129,6 +134,7 @@ jobs:
       
           # Explicitly set theme options to override the default behavior
           echo 'html_theme_options = {' >> docs/source/conf.py
+          echo '    "site_name": "ARCTICS Aurora Field Guide And Handbook",' >> docs/source/conf.py
           echo '    "github_url": "https://github.com/kherli/Aurora-Field-Guide-And-Handbook/tree/gh-pages/docs/source/",' >> docs/source/conf.py  # Direct link to "gh-pages" branch root
           echo '}' >> docs/source/conf.py
 
